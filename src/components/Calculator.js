@@ -2,6 +2,7 @@ import React, { useState, useRef, useMemo } from 'react'
 import Button from './Button'
 import styled from 'styled-components'
 import stringMath from 'string-math'
+import stringIsNumeric from 'string-is-numeric'
 
 const Container = styled.div`
   flex-direction: column;
@@ -18,7 +19,9 @@ border-radius: 10px;
 `
 
 const Display = styled.div`
-  // flex-direction: column;
+  overflow: scroll;
+  flex-wrap: wrap;
+  max-width: 580px;
   align-items: flex-end;
   padding: 10px;
 `
@@ -26,14 +29,20 @@ const Display = styled.div`
 const Input = styled.h1`
   color: #fff;
   height: 42px;
+  flex: 1;
 `
 
 const Result = styled.h1`
   color: #fff;
   height: 42px;
   text-align: right;
-  flex: 1;
+  animation-duration: 0.4s;
 `
+
+const getLast = (string) => {
+  const res = string.slice(string.length - 1, string.length)
+  return res
+}
 
 // const evaluate = (value) => {
 //   setResult(stringMath(value)
@@ -42,10 +51,10 @@ const Result = styled.h1`
 function Calculator () {
   const [mathString, setMathString] = useState('')
   // const [result, setResult] = useState('Banana')
-  const upperElementRef = useRef()
+  const resultElementRef = useRef()
 
   const callback = () => {
-    console.log('error')
+
   }
 
   const result = useMemo(
@@ -54,7 +63,20 @@ function Calculator () {
   )
 
   const addToMathString = (value) => {
+    // check if )
+    if (getLast(mathString) !== ')') {
+      if ((!stringIsNumeric(value)) && !stringIsNumeric(mathString.slice(-1))) { return }
+    } else {
+      // only math operator valid!
+      if (value === ')' || value === '(') { return }
+      if (stringIsNumeric(value)) {
+        setMathString(mathString + '*' + value)
+        return
+      }
+    }
     setMathString(mathString + value)
+
+    animateResult()
     // setResult(stringMath(mathString + value))
   }
 
@@ -62,13 +84,18 @@ function Calculator () {
     setMathString('')
   }
 
-  const animateUpper = () => {
-    console.log(upperElementRef.current)
-    upperElementRef.current.style.animationName = 'bounce'
+  const animateResult = () => {
+    console.log(resultElementRef.current)
+    resultElementRef.current.style.animationName = 'bounce'
     const resetAnimation = () => {
-      upperElementRef.current.style.animationName = ''
+      resultElementRef.current.style.animationName = ''
     }
     setTimeout(resetAnimation, 400)
+  }
+
+  const padParenthesis = () => {
+    if (mathString.slice(0, 1) === '(' && mathString.slice((mathString.length) - 1) === ')') { return }
+    setMathString('(' + mathString + ')')
   }
 
   const removeLast = () => {
@@ -79,7 +106,7 @@ function Calculator () {
     <Container className='calculator'>
       <Display>
         <Input>{mathString}</Input>
-        <Result>= {result}</Result>
+        <Result ref={resultElementRef}>= {result}</Result>
       </Display>
 
       <ButtonContainer>
@@ -106,6 +133,10 @@ function Calculator () {
         <Button onClick={() => addToMathString('0')} size={1} text={0} />
         <Button onClick={() => addToMathString('(')} size={1} text='(' />
         <Button onClick={() => addToMathString(')')} size={1} text=')' />
+        {/* New Line */}
+        <Button onClick={() => addToMathString('^')} size={1} text='^' />
+        <Button onClick={() => addToMathString('√')} size={1} text='√' />
+        <Button onClick={padParenthesis} size={2} text='(...)' />
 
       </ButtonContainer>
 

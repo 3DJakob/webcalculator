@@ -9,6 +9,7 @@ const Container = styled.div`
     align-items: stretch;
     font-size: 32px;
     font-weight: bold;
+    user-select: none;
 
     >div {
       border-radius: 10px;
@@ -29,7 +30,6 @@ const Container = styled.div`
 `
 
 function Button ({ size, text, onClick }) {
-  console.log(size * 25 + '%')
   return (
     <Container size={size}>
       <div onClick={onClick}>

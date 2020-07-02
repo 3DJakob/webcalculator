@@ -4,7 +4,7 @@ import Calculator from '../src/components/Calculator'
 import styled from 'styled-components'
 
 const Container = styled.div`
-  background-color: navy;
+  background-image: linear-gradient(rgb(175, 132, 152), rgb(201, 112, 65));
   min-height: 100vh;
   min-width: 100vw;
   display: flex;
