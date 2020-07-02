@@ -14,9 +14,9 @@
     "static/js/2.1c260e7f.chunk.js.LICENSE.txt": "/webcalculator/static/js/2.1c260e7f.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "webcalculator/static/js/runtime-main.d71cd019.js",
-    "webcalculator/static/js/2.1c260e7f.chunk.js",
-    "webcalculator/static/css/main.6b21649b.chunk.css",
-    "webcalculator/static/js/main.4b175aac.chunk.js"
+    "static/js/runtime-main.d71cd019.js",
+    "static/js/2.1c260e7f.chunk.js",
+    "static/css/main.6b21649b.chunk.css",
+    "static/js/main.4b175aac.chunk.js"
   ]
 }
